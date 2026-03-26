@@ -1,0 +1,470 @@
+﻿
+> dairy-track@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.3
+
+   Creating an optimized production build ...
+node.exe : Failed to 
+compile.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Failed to com   
+ pile.:String) [],     
+RemoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+
+./src/app/globals.css.w
+ebpack[javascript/auto]
+!=!./node_modules/next/
+dist/build/webpack/load
+ers/css-loader/src/inde
+x.js??ruleSet[1].rules[
+13].oneOf[12].use[2]!./
+node_modules/next/dist/
+build/webpack/loaders/p
+ostcss-loader/src/index
+.js??ruleSet[1].rules[1
+3].oneOf[12].use[3]!./s
+rc/app/globals.css
+Error: Cannot find 
+module 'autoprefixer'
+Require stack:
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\plugins.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-config.
+js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-build\i
+mpl.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\compiled\jest-worker\
+processChild.js
+    at 
+Module.<anonymous> (nod
+e:internal/modules/cjs/
+loader:1475:15)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\server\require-h
+ook.js:55:36
+    at 
+wrapResolveFilename (no
+de:internal/modules/cjs
+/loader:1048:27)
+    at 
+resolveForCJSWithHooks 
+(node:internal/modules/
+cjs/loader:1093:12)
+    at require.resolve 
+(node:internal/modules/
+helpers:209:31)
+    at loadPlugin (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:49:32)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\build\webpack\co
+nfig\blocks\css\plugins
+.js:157:56
+    at Array.map 
+(<anonymous>)
+    at 
+getPostCssPlugins (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:157:47)
+    at async C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\build\webp
+ack\config\blocks\css\i
+ndex.js:124:36
+
+Import trace for 
+requested module:
+./src/app/globals.css.w
+ebpack[javascript/auto]
+!=!./node_modules/next/
+dist/build/webpack/load
+ers/css-loader/src/inde
+x.js??ruleSet[1].rules[
+13].oneOf[12].use[2]!./
+node_modules/next/dist/
+build/webpack/loaders/p
+ostcss-loader/src/index
+.js??ruleSet[1].rules[1
+3].oneOf[12].use[3]!./s
+rc/app/globals.css
+./src/app/globals.css
+
+./src/app/globals.css
+Error: Cannot find 
+module 'autoprefixer'
+Require stack:
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\plugins.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-config.
+js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-build\i
+mpl.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\compiled\jest-worker\
+processChild.js
+    at 
+Module.<anonymous> (nod
+e:internal/modules/cjs/
+loader:1475:15)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\server\require-h
+ook.js:55:36
+    at 
+wrapResolveFilename (no
+de:internal/modules/cjs
+/loader:1048:27)
+    at 
+resolveForCJSWithHooks 
+(node:internal/modules/
+cjs/loader:1093:12)
+    at require.resolve 
+(node:internal/modules/
+helpers:209:31)
+    at loadPlugin (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:49:32)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\build\webpack\co
+nfig\blocks\css\plugins
+.js:157:56
+    at Array.map 
+(<anonymous>)
+    at 
+getPostCssPlugins (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:157:47)
+    at async C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\build\webp
+ack\config\blocks\css\i
+ndex.js:124:36
+    at 
+tryRunOrWebpackError (C
+:\Users\chait\OneDrive\
+Documents\Dairy Track\n
+ode_modules\next\dist\c
+ompiled\webpack\bundle5
+.js:28:312989)
+    at __webpack_requir
+e_module__ (C:\Users\ch
+ait\OneDrive\Documents\
+Dairy Track\node_module
+s\next\dist\compiled\we
+bpack\bundle5.js:28:131
+165)
+    at __nested_webpack
+_require_153728__ (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\comp
+iled\webpack\bundle5.js
+:28:130607)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\compiled\webpack
+\bundle5.js:28:131454
+    at symbolIterator (
+C:\Users\chait\OneDrive
+\Documents\Dairy Track\
+node_modules\next\dist\
+compiled\neo-async\asyn
+c.js:1:14444)
+    at done (C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\compiled\n
+eo-async\async.js:1:148
+24)
+    at Hook.eval [as 
+callAsync] (eval at 
+create (C:\Users\chait\
+OneDrive\Documents\Dair
+y Track\node_modules\ne
+xt\dist\compiled\webpac
+k\bundle5.js:13:28858),
+ <anonymous>:15:1)
+    at Hook.CALL_ASYNC_
+DELEGATE [as 
+_callAsync] (C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\compiled\w
+ebpack\bundle5.js:13:26
+012)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\compiled\webpack
+\bundle5.js:28:130328
+    at symbolIterator (
+C:\Users\chait\OneDrive
+\Documents\Dairy Track\
+node_modules\next\dist\
+compiled\neo-async\asyn
+c.js:1:14402)
+-- inner error --
+Error: Cannot find 
+module 'autoprefixer'
+Require stack:
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\plugins.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+blocks\css\index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack\config\
+index.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-config.
+js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\build\webpack-build\i
+mpl.js
+- C:\Users\chait\OneDri
+ve\Documents\Dairy Trac
+k\node_modules\next\dis
+t\compiled\jest-worker\
+processChild.js
+    at 
+Module.<anonymous> (nod
+e:internal/modules/cjs/
+loader:1475:15)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\server\require-h
+ook.js:55:36
+    at 
+wrapResolveFilename (no
+de:internal/modules/cjs
+/loader:1048:27)
+    at 
+resolveForCJSWithHooks 
+(node:internal/modules/
+cjs/loader:1093:12)
+    at require.resolve 
+(node:internal/modules/
+helpers:209:31)
+    at loadPlugin (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:49:32)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\build\webpack\co
+nfig\blocks\css\plugins
+.js:157:56
+    at Array.map 
+(<anonymous>)
+    at 
+getPostCssPlugins (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\config\blocks
+\css\plugins.js:157:47)
+    at async C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\build\webp
+ack\config\blocks\css\i
+ndex.js:124:36
+    at 
+Object.<anonymous> (C:\
+Users\chait\OneDrive\Do
+cuments\Dairy Track\nod
+e_modules\next\dist\bui
+ld\webpack\loaders\css-
+loader\src\index.js??ru
+leSet[1].rules[13].oneO
+f[12].use[2]!C:\Users\c
+hait\OneDrive\Documents
+\Dairy Track\node_modul
+es\next\dist\build\webp
+ack\loaders\postcss-loa
+der\src\index.js??ruleS
+et[1].rules[13].oneOf[1
+2].use[3]!C:\Users\chai
+t\OneDrive\Documents\Da
+iry Track\src\app\globa
+ls.css:1:7)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\compiled\webpack
+\bundle5.js:28:922493
+    at Hook.eval [as 
+call] (eval at create (
+C:\Users\chait\OneDrive
+\Documents\Dairy Track\
+node_modules\next\dist\
+compiled\webpack\bundle
+5.js:13:28636), 
+<anonymous>:7:1)
+    at 
+Hook.CALL_DELEGATE [as 
+_call] (C:\Users\chait\
+OneDrive\Documents\Dair
+y Track\node_modules\ne
+xt\dist\compiled\webpac
+k\bundle5.js:13:25906)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\compiled\webpack
+\bundle5.js:28:131198
+    at 
+tryRunOrWebpackError (C
+:\Users\chait\OneDrive\
+Documents\Dairy Track\n
+ode_modules\next\dist\c
+ompiled\webpack\bundle5
+.js:28:312943)
+    at __webpack_requir
+e_module__ (C:\Users\ch
+ait\OneDrive\Documents\
+Dairy Track\node_module
+s\next\dist\compiled\we
+bpack\bundle5.js:28:131
+165)
+    at __nested_webpack
+_require_153728__ (C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\comp
+iled\webpack\bundle5.js
+:28:130607)
+    at C:\Users\chait\O
+neDrive\Documents\Dairy
+ Track\node_modules\nex
+t\dist\compiled\webpack
+\bundle5.js:28:131454
+    at symbolIterator (
+C:\Users\chait\OneDrive
+\Documents\Dairy Track\
+node_modules\next\dist\
+compiled\neo-async\asyn
+c.js:1:14444)
+
+Generated code for C:\U
+sers\chait\OneDrive\Doc
+uments\Dairy Track\node
+_modules\next\dist\buil
+d\webpack\loaders\css-l
+oader\src\index.js??rul
+eSet[1].rules[13].oneOf
+[12].use[2]!C:\Users\ch
+ait\OneDrive\Documents\
+Dairy Track\node_module
+s\next\dist\build\webpa
+ck\loaders\postcss-load
+er\src\index.js??ruleSe
+t[1].rules[13].oneOf[12
+].use[3]!C:\Users\chait
+\OneDrive\Documents\Dai
+ry Track\src\app\global
+s.css
+
+Import trace for 
+requested module:
+./src/app/globals.css
+
+
+> Build failed because 
+of webpack errors

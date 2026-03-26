@@ -6,6 +6,7 @@ import { useAppStore, Product } from '@/lib/store/useAppStore';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { format } from 'date-fns';
+import toast from 'react-hot-toast';
 
 export default function EntryPage() {
   const { products, setProducts, user } = useAppStore();
@@ -56,7 +57,7 @@ export default function EntryPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!shopName || grandTotal === 0) {
-      alert("Please enter shop name and at least one product quantity.");
+      toast.error("Please enter shop name and at least one product quantity.");
       return;
     }
 
@@ -89,7 +90,7 @@ export default function EntryPage() {
         createdAt: serverTimestamp()
       });
 
-      alert("Entry saved successfully!");
+      toast.success("Entry saved successfully!");
       
       // Reset form
       setShopName('');
@@ -99,7 +100,7 @@ export default function EntryPage() {
       
     } catch (err) {
       console.error("Error saving entry", err);
-      alert("Failed to save entry");
+      toast.error("Failed to save entry");
     } finally {
       setLoading(false);
     }

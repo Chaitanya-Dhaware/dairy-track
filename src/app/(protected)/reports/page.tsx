@@ -5,6 +5,7 @@ import { db } from '@/lib/firebase/config';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { useAppStore } from '@/lib/store/useAppStore';
+import toast from 'react-hot-toast';
 
 interface Entry {
   id: string;
@@ -54,10 +55,11 @@ export default function ReportsPage() {
         paymentStatus: 'paid',
         dueAmount: 0 // Reset due
       });
+      toast.success("Marked as Paid successfully!");
       await fetchEntries();
     } catch (err) {
       console.error("Error updating status", err);
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     }
   };
 

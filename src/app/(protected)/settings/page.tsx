@@ -6,6 +6,7 @@ import { useAppStore, Product } from '@/lib/store/useAppStore';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function SettingsPage() {
   const { products, setProducts, user } = useAppStore();
@@ -38,7 +39,7 @@ export default function SettingsPage() {
     if (!name || !price) return;
     
     if (products.some(p => p.name.toLowerCase() === name.toLowerCase())) {
-      alert("Product with this name already exists");
+      toast.error("Product with this name already exists");
       return;
     }
 
@@ -55,7 +56,7 @@ export default function SettingsPage() {
       await fetchProducts(); // Refresh list
     } catch (err) {
       console.error("Error adding product", err);
-      alert("Failed to add product");
+      toast.error("Failed to add product");
     } finally {
       setLoading(false);
     }
@@ -65,6 +66,7 @@ export default function SettingsPage() {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
       await deleteDoc(doc(db, 'products', id));
+      toast.success("Product deleted");
       await fetchProducts();
     } catch (err) {
       console.error("Error deleting product", err);

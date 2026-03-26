@@ -32,6 +32,14 @@ export default function ReportsPage() {
   const [searchShop, setSearchShop] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'due'>('all');
 
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: '', endDate: '', searchShop: '', statusFilter: 'all'
+  });
+
+  const handleSearch = () => {
+    setAppliedFilters({ startDate, endDate, searchShop: searchShop, statusFilter });
+  };
+
   const fetchEntries = async () => {
     try {
       setLoading(true);
@@ -67,12 +75,18 @@ export default function ReportsPage() {
 
   const filteredEntries = entries.filter(entry => {
     let match = true;
-    if (startDate && entry.date < startDate) match = false;
-    if (endDate && entry.date > endDate) match = false;
-    if (searchShop && !entry.shopName.toLowerCase().includes(searchShop.toLowerCase())) match = false;
-    if (statusFilter !== 'all' && entry.paymentStatus !== statusFilter) match = false;
+    if (appliedFilters.startDate && entry.date < appliedFilters.startDate) match = false;
+    if (appliedFilters.endDate && entry.date > appliedFilters.endDate) match = false;
+    if (appliedFilters.searchShop && !entry.shopName.toLowerCase().includes(appliedFilters.searchShop.toLowerCase())) match = false;
+    if (appliedFilters.statusFilter !== 'all' && entry.paymentStatus !== appliedFilters.statusFilter) match = false;
     return match;
   });
+
+  const groupedEntries = filteredEntries.reduce((acc, entry) => {
+    if (!acc[entry.date]) acc[entry.date] = [];
+    acc[entry.date].push(entry);
+    return acc;
+  }, {} as Record<string, Entry[]>);
 
   const exportToCsv = () => {
     const headers = ["Entry Date", "Shop Name", "Shop Address", "Mobile Number", "Products (Qty)", "Total Cost", "Payment Status", "Due Amount"];
@@ -115,7 +129,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-5 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 border border-gray-100">
+      <div className="bg-white p-5 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 border border-gray-100 items-end">
         <div>
           <label className="text-xs text-gray-500 mb-1 font-medium block uppercase tracking-wider">Start Date</label>
           <Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full" />
@@ -140,6 +154,9 @@ export default function ReportsPage() {
             <option value="due">Due</option>
           </select>
         </div>
+        <Button onClick={handleSearch} className="h-12 w-full text-base font-bold shadow-md">
+          Search
+        </Button>
       </div>
 
       {/* Table */}
@@ -167,41 +184,52 @@ export default function ReportsPage() {
                   <td colSpan={7} className="text-center py-12 text-gray-500 font-medium">No sales entries match your current filters.</td>
                 </tr>
               ) : (
-                filteredEntries.map(entry => (
-                  <tr key={entry.id} className="hover:bg-[#f8faf9] transition-colors">
-                    <td className="px-5 py-4 whitespace-nowrap font-medium text-gray-700">{entry.date}</td>
-                    <td className="px-5 py-4 font-bold text-gray-900">{entry.shopName}</td>
-                    <td className="px-5 py-4">
-                      <div className="flex flex-col gap-1">
-                        {entry.products.map(p => (
-                          <div key={p.productId} className="text-xs bg-gray-50 inline-block px-2 py-1 rounded">
-                            <span className="font-semibold text-gray-700">{p.name}:</span> {p.quantity} {p.unitType}
+                Object.keys(groupedEntries)
+                  .sort((a, b) => b.localeCompare(a))
+                  .map(dateKey => (
+                  <React.Fragment key={dateKey}>
+                    <tr className="bg-[#f0f9ff] border-y border-[#bae6fd]">
+                      <td colSpan={7} className="px-5 py-3 font-bold text-[#0369a1] text-sm uppercase tracking-widest text-center shadow-sm">
+                        Entries for: {dateKey}
+                      </td>
+                    </tr>
+                    {groupedEntries[dateKey].map(entry => (
+                      <tr key={entry.id} className="hover:bg-[#f8faf9] transition-colors">
+                        <td className="px-5 py-4 whitespace-nowrap font-medium text-gray-500">{entry.date}</td>
+                        <td className="px-5 py-4 font-bold text-gray-900">{entry.shopName}</td>
+                        <td className="px-5 py-4">
+                          <div className="flex flex-col gap-1">
+                            {entry.products.map(p => (
+                              <div key={p.productId} className="text-xs bg-gray-50 inline-block px-2 py-1 rounded border border-gray-100">
+                                <span className="font-semibold text-gray-700">{p.name}:</span> {p.quantity} {p.unitType}
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="px-5 py-4 text-right font-black text-gray-900 text-base">₹{entry.totalAmount.toFixed(2)}</td>
-                    <td className="px-5 py-4 text-center">
-                      <span className={`inline-flex px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${
-                        entry.paymentStatus === 'paid' ? 'bg-[#eef5f0] text-primary' : 'bg-[#fcede8] text-danger'
-                      }`}>
-                        {entry.paymentStatus}
-                      </span>
-                    </td>
-                    <td className="px-5 py-4 text-right font-bold text-danger">
-                      {entry.dueAmount > 0 ? `₹${entry.dueAmount.toFixed(2)}` : <span className="text-gray-300">-</span>}
-                    </td>
-                    <td className="px-5 py-4 text-center">
-                      {entry.paymentStatus === 'due' && (
-                        <button 
-                          onClick={() => handleMarkPaid(entry.id, entry.totalAmount)}
-                          className="text-xs font-bold text-white bg-primary px-4 py-2 rounded-lg hover:bg-primary/90 shadow-md whitespace-nowrap active:scale-95 transition-transform uppercase"
-                        >
-                          Mark Paid
-                        </button>
-                      )}
-                    </td>
-                  </tr>
+                        </td>
+                        <td className="px-5 py-4 text-right font-black text-gray-900 text-base">₹{entry.totalAmount.toFixed(2)}</td>
+                        <td className="px-5 py-4 text-center">
+                          <span className={`inline-flex px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${
+                            entry.paymentStatus === 'paid' ? 'bg-[#eef5f0] text-primary' : 'bg-[#fcede8] text-danger'
+                          }`}>
+                            {entry.paymentStatus}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4 text-right font-bold text-danger">
+                          {entry.dueAmount > 0 ? `₹${entry.dueAmount.toFixed(2)}` : <span className="text-gray-300">-</span>}
+                        </td>
+                        <td className="px-5 py-4 text-center">
+                          {entry.paymentStatus === 'due' && (
+                            <button 
+                              onClick={() => handleMarkPaid(entry.id, entry.totalAmount)}
+                              className="text-xs font-bold text-white bg-primary px-4 py-2 rounded-lg hover:bg-primary/90 shadow-md whitespace-nowrap active:scale-95 transition-transform uppercase"
+                            >
+                              Mark Paid
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
                 ))
               )}
             </tbody>

@@ -13,6 +13,8 @@ export default function EntryPage() {
   
   const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [shopName, setShopName] = useState('');
+  const [shopAddress, setShopAddress] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [quantities, setQuantities] = useState<Record<string, string>>({});
   const [paymentStatus, setPaymentStatus] = useState<'paid'|'due'>('paid');
   const [remarks, setRemarks] = useState('');
@@ -81,6 +83,8 @@ export default function EntryPage() {
       await addDoc(collection(db, 'entries'), {
         date,
         shopName,
+        shopAddress,
+        mobileNumber,
         createdBy: user?.uid,
         products: entryProducts,
         totalAmount: grandTotal,
@@ -94,13 +98,15 @@ export default function EntryPage() {
       
       // Reset form
       setShopName('');
+      setShopAddress('');
+      setMobileNumber('');
       setQuantities({});
       setPaymentStatus('paid');
       setRemarks('');
       
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error saving entry", err);
-      toast.error("Failed to save entry");
+      toast.error(err.message || "Failed to save entry. Check Firestore Rules!");
     } finally {
       setLoading(false);
     }
@@ -125,6 +131,20 @@ export default function EntryPage() {
             value={shopName} 
             onChange={e => setShopName(e.target.value)} 
             required 
+            className="font-medium text-gray-700"
+          />
+          <Input 
+            type="text" 
+            placeholder="Shop Address (Optional)" 
+            value={shopAddress} 
+            onChange={e => setShopAddress(e.target.value)} 
+            className="font-medium text-gray-700"
+          />
+          <Input 
+            type="tel" 
+            placeholder="Mobile Number (Optional)" 
+            value={mobileNumber} 
+            onChange={e => setMobileNumber(e.target.value)} 
             className="font-medium text-gray-700"
           />
         </div>
@@ -152,10 +172,13 @@ export default function EntryPage() {
                       <Input 
                         type="number" 
                         min="0" 
-                        step="0.01" 
+                        step="1" 
                         placeholder="0"
                         value={qty} 
-                        onChange={e => handleQuantityChange(product.id, e.target.value)} 
+                        onChange={e => {
+                          const intVal = e.target.value.replace(/[^0-9]/g, '');
+                          handleQuantityChange(product.id, intVal);
+                        }} 
                         className="w-20 text-center h-12 font-bold text-lg border-gray-200 bg-gray-50 focus:bg-white"
                       />
                     </div>

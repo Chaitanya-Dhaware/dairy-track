@@ -11,6 +11,8 @@ interface Entry {
   id: string;
   date: string;
   shopName: string;
+  shopAddress?: string;
+  mobileNumber?: string;
   products: any[];
   totalAmount: number;
   paymentStatus: 'paid' | 'due';
@@ -72,13 +74,45 @@ export default function ReportsPage() {
     return match;
   });
 
+  const exportToCsv = () => {
+    const headers = ["Entry Date", "Shop Name", "Shop Address", "Mobile Number", "Products (Qty)", "Total Cost", "Payment Status", "Due Amount"];
+    
+    const rows = filteredEntries.map(entry => {
+      const productString = entry.products.map(p => `${p.name} (${p.quantity} ${p.unitType})`).join(" | ");
+      return [
+        entry.date,
+        `"${entry.shopName}"`,
+        `"${entry.shopAddress || ''}"`,
+        `"${entry.mobileNumber || ''}"`,
+        `"${productString}"`,
+        entry.totalAmount.toFixed(2),
+        entry.paymentStatus.toUpperCase(),
+        entry.dueAmount.toFixed(2)
+      ].join(",");
+    });
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `DairyTrack_Export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (user?.role !== 'admin') {
     return <div className="p-4 text-center text-red-500">Access Denied. Admins only.</div>;
   }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold text-primary">Reports & History</h1>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold text-primary">Reports & History</h1>
+        <Button onClick={() => exportToCsv()} className="bg-green-600 hover:bg-green-700 text-white shadow-md">
+          Export to Excel (CSV)
+        </Button>
+      </div>
 
       {/* Filters */}
       <div className="bg-white p-5 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 border border-gray-100">

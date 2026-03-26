@@ -72,25 +72,25 @@ export default function EntryPage() {
           const price = Number(p.price) || 0;
           return {
             productId: p.id,
-            name: p.name,
+            name: p.name || "",
             quantity: q,
-            unitType: p.unitType,
+            unitType: p.unitType || "",
             price: price,
             total: q * price
           }
         });
 
       await addDoc(collection(db, 'entries'), {
-        date,
-        shopName,
-        shopAddress,
-        mobileNumber,
-        createdBy: user?.uid,
+        date: date || "",
+        shopName: shopName || "",
+        shopAddress: shopAddress || "",
+        mobileNumber: mobileNumber || "",
+        createdBy: user?.uid || null,
         products: entryProducts,
-        totalAmount: grandTotal,
-        paymentStatus,
+        totalAmount: grandTotal || 0,
+        paymentStatus: paymentStatus || "paid",
         dueAmount: paymentStatus === 'due' ? grandTotal : 0,
-        remarks,
+        remarks: remarks || "",
         createdAt: serverTimestamp()
       });
 

@@ -105,9 +105,9 @@ export default function ReportsPage() {
       const productString = entry.products.map(p => `${p.name} (${p.quantity} ${p.unitType})`).join(" | ");
       return [
         entry.date,
-        `"${entry.shopName}"`,
-        `"${entry.shopAddress || ''}"`,
-        `"${entry.mobileNumber || ''}"`,
+        `"${entry.shopName?.replace(/"/g, '""') || ''}"`,
+        `"${entry.shopAddress?.replace(/"/g, '""') || ''}"`,
+        `"${entry.mobileNumber?.replace(/"/g, '""') || ''}"`,
         `"${productString}"`,
         entry.totalAmount.toFixed(2),
         entry.paymentStatus.toUpperCase(),
@@ -115,10 +115,11 @@ export default function ReportsPage() {
       ].join(",");
     });
 
-    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\\n");
-    const encodedUri = encodeURI(csvContent);
+    const csvContent = [headers.join(","), ...rows].join("\r\n");
+    const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
     link.setAttribute("download", `DairyTrack_Export.csv`);
     document.body.appendChild(link);
     link.click();

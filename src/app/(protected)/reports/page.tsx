@@ -43,12 +43,22 @@ export default function ReportsPage() {
   const fetchEntries = async () => {
     try {
       setLoading(true);
-      const q = query(collection(db, 'entries'), orderBy('date', 'desc'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Entry));
+      // Remove composite orderBy to avoid Firestore Index requirement crashes for users
+      const snapshot = await getDocs(collection(db, 'entries'));
+      let docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Entry));
+      
+      // Sort manually in JS
+      docs.sort((a, b) => {
+        if (a.date !== b.date) return (b.date || "").localeCompare(a.date || "");
+        const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return bTime - aTime;
+      });
+
       setEntries(docs);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error fetching entries", err);
+      toast.error(err.message || "Failed to load entries.");
     } finally {
       setLoading(false);
     }
@@ -129,7 +139,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-5 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 border border-gray-100 items-end">
+      <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="bg-white p-5 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-5 gap-4 border border-gray-100 items-end">
         <div>
           <label className="text-xs text-gray-500 mb-1 font-medium block uppercase tracking-wider">Start Date</label>
           <Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="w-full" />
@@ -154,10 +164,10 @@ export default function ReportsPage() {
             <option value="due">Due</option>
           </select>
         </div>
-        <Button onClick={handleSearch} className="h-12 w-full text-base font-bold shadow-md">
+        <Button type="submit" className="h-12 w-full text-base font-bold shadow-md">
           Search
         </Button>
-      </div>
+      </form>
 
       {/* Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

@@ -99,20 +99,59 @@ export default function ReportsPage() {
   }, {} as Record<string, Entry[]>);
 
   const exportToCsv = () => {
-    const headers = ["Entry Date", "Shop Name", "Shop Address", "Mobile Number", "Products (Qty)", "Total Cost", "Payment Status", "Due Amount"];
+    const headers = [
+      "Entry Date", 
+      "Shop Name", 
+      "Shop Address", 
+      "Mobile Number", 
+      "Product Name", 
+      "Quantity", 
+      "Unit", 
+      "Item Cost (₹)", 
+      "Invoice Total (₹)", 
+      "Payment Status", 
+      "Due Amount (₹)"
+    ];
     
-    const rows = filteredEntries.map(entry => {
-      const productString = entry.products.map(p => `${p.name} (${p.quantity} ${p.unitType})`).join(" | ");
-      return [
-        entry.date,
-        `"${entry.shopName?.replace(/"/g, '""') || ''}"`,
-        `"${entry.shopAddress?.replace(/"/g, '""') || ''}"`,
-        `"${entry.mobileNumber?.replace(/"/g, '""') || ''}"`,
-        `"${productString}"`,
-        entry.totalAmount.toFixed(2),
-        entry.paymentStatus.toUpperCase(),
-        entry.dueAmount.toFixed(2)
-      ].join(",");
+    const rows: string[] = [];
+
+    filteredEntries.forEach(entry => {
+      if (!entry.products || entry.products.length === 0) {
+        // Fallback for empty products
+        rows.push([
+          `="${entry.date}"`,
+          `"${entry.shopName?.replace(/"/g, '""') || ''}"`,
+          `"${entry.shopAddress?.replace(/"/g, '""') || ''}"`,
+          `="${entry.mobileNumber || ''}"`,
+          `"None"`, `"0"`, `""`, `"0.00"`,
+          entry.totalAmount.toFixed(2),
+          entry.paymentStatus.toUpperCase(),
+          entry.dueAmount.toFixed(2)
+        ].join(","));
+        return;
+      }
+
+      entry.products.forEach(p => {
+        const q = Number(p.quantity) || 0;
+        const price = Number(p.price) || 0; // Use p.price if available, or just fallback
+        // If price wasn't saved natively in older entries, we derive it from totalAmount if it's the only product, else 0.
+        // But price should have been saved. If not, Item Cost = (q * price).
+        const itemCost = p.total || (q * price);
+
+        rows.push([
+          `="${entry.date}"`,
+          `"${entry.shopName?.replace(/"/g, '""') || ''}"`,
+          `"${entry.shopAddress?.replace(/"/g, '""') || ''}"`,
+          `="${entry.mobileNumber || ''}"`,
+          `"${p.name?.replace(/"/g, '""') || ''}"`,
+          `"${q}"`,
+          `"${p.unitType || ''}"`,
+          itemCost.toFixed(2),
+          entry.totalAmount.toFixed(2),
+          entry.paymentStatus.toUpperCase(),
+          entry.dueAmount.toFixed(2)
+        ].join(","));
+      });
     });
 
     const csvContent = [headers.join(","), ...rows].join("\r\n");
